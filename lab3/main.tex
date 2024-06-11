@@ -136,7 +136,7 @@ Từ (1) và (2) suy ra: $T(n) \in \Theta(n \log n)$\\ \\
               \item Từ tính chất được nêu ở trên, hãy ước lượng độ phức tạp của đoạn code sau ( viết  bằng C++) dựa trên việc đếm số phép S:
                     \begin{figure}[h] % Hình ảnh sẽ được đặt tại vị trí gần nhất có thể
                         \centering
-                        \includegraphics[width=0.5\textwidth]{img1.png} % Đường dẫn tới tập tin hình ảnh
+                        \includegraphics[width=0.5\textwidth]{image/img1.png} % Đường dẫn tới tập tin hình ảnh
                         \label{fig:hinh_anh}
                     \end{figure}
           \end{enumerate}
@@ -171,7 +171,7 @@ $ \Rightarrow(2n+1) \cdot \sum_{i = 1}^{n}d(i) \in \Theta(n^2 \log n)$\\
     \item Xét đoạn code sau viết bằng C++ để kiểm tra số nguyên dương $a_{0},a_{1},a_{2},\cdots,a_{n-1} $ có thỏa mãn ràng buộc: với mọi $i=0,1,2,\cdots,n-1 $ thì hai số  $a_{i} $ và $i $ đều có cùng tính chẳn lẻ hay không:
           \begin{figure}[h] % Hình ảnh sẽ được đặt tại vị trí gần nhất có thể
               \centering
-              \includegraphics[width=0.5\textwidth]{img2.png} % Đường dẫn tới tập tin hình ảnh
+              \includegraphics[width=0.5\textwidth]{image/img2.png} % Đường dẫn tới tập tin hình ảnh
               \label{fig:hinh_anh}
           \end{figure}
           \\
@@ -225,7 +225,7 @@ $ \Rightarrow(2n+1) \cdot \sum_{i = 1}^{n}d(i) \in \Theta(n^2 \log n)$\\
                                   \item Thuật toán tính số Fibonaci dùng đệ quy:
                                         \begin{figure}[h] % Hình ảnh sẽ được đặt tại vị trí gần nhất có thể
                                             \centering
-                                            \includegraphics[width=0.5\textwidth]{img3.png} % Đường dẫn tới tập tin hình ảnh
+                                            \includegraphics[width=0.5\textwidth]{image/img3.png} % Đường dẫn tới tập tin hình ảnh
                                             \label{fig:hinh_anh}
                                         \end{figure}
                                     
@@ -233,7 +233,7 @@ $ \Rightarrow(2n+1) \cdot \sum_{i = 1}^{n}d(i) \in \Theta(n^2 \log n)$\\
                                   \item Thuật toán tính số Fibonaci không đệ quy:
                                         \begin{figure}[h] % Hình ảnh sẽ được đặt tại vị trí gần nhất có thể
                                             \centering
-                                            \includegraphics[width=0.5\textwidth]{img4.png} % Đường dẫn tới tập tin hình ảnh
+                                            \includegraphics[width=0.5\textwidth]{image/img4.png} % Đường dẫn tới tập tin hình ảnh
                                             \label{fig:hinh_anh}
                                         \end{figure}
                               \end{itemize}
@@ -317,7 +317,7 @@ plt.show()
 \item \textbf{Đồ thị biểu diễn}\\
 Đồ thị dưới đây biểu diễn sự thay đổi của số phép gán và số phép so sánh theo giá trị \(n\).
 \newpage 
-\begin{filecontents*}{data1.dat}
+\begin{filecontents*}{data/data1.dat}
 n assign compare
 0 1 1
 1 1 2
@@ -352,8 +352,8 @@ n assign compare
             width=0.8\textwidth,
             height=0.5\textwidth
         ]
-        \addplot table [x=n, y=assign, col sep=space] {data1.dat};
-        \addplot table [x=n, y=compare, col sep=space] {data1.dat};
+        \addplot table [x=n, y=assign, col sep=space] {data/data1.dat};
+        \addplot table [x=n, y=compare, col sep=space] {data/data1.dat};
         \legend{Số phép gán, Số phép so sánh}
         \end{axis}
     \end{tikzpicture}
@@ -449,7 +449,7 @@ plt.show()
 \end{table}
 \newpage
 
-\begin{filecontents*}{data2.dat}
+\begin{filecontents*}{data/data2.dat}
 n assign compare
 0 1 1
 1 1 2
@@ -484,8 +484,8 @@ n assign compare
             width=0.8\textwidth,
             height=0.5\textwidth
         ]
-        \addplot table [x=n, y=assign, col sep=space] {data2.dat};
-        \addplot table [x=n, y=compare, col sep=space] {data2.dat};
+        \addplot table [x=n, y=assign, col sep=space] {data/data2.dat};
+        \addplot table [x=n, y=compare, col sep=space] {data/data2.dat};
         \legend{Số phép gán, Số phép so sánh}
         \end{axis}
     \end{tikzpicture}
