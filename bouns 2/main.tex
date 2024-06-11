@@ -1,0 +1,136 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{vietnam}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{changepage}
+\usepackage{lipsum}
+\usepackage{tikz}
+\usepackage{stackrel}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{tabularx}
+\usepackage{transparent}
+\usepackage{amsmath}
+\usepackage{pgfplots}
+\usepackage{filecontents}
+\usepackage{caption}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{filecontents}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+\lstset{ 
+  language=Python, 
+  basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{blue},
+  stringstyle=\color{red},
+  commentstyle=\color{gray},
+  morecomment=[l][\color{magenta}]{\#},
+  numbers=left, 
+  numberstyle=\tiny\color{gray},
+  stepnumber=1,
+  numbersep=5pt,
+  frame=single,
+  breaklines=true
+}
+\usepackage[margin=1.2cm]{geometry}
+\title{\LARGE{\textbf{Nhập môn phân tích độ phức tạp thuật toán-21TN}}}
+\author{TRẦN MINH HOÀNG-21120075}
+\date{} % Ngày không cần hiển thị
+\begin{document}
+\maketitle
+\begin{center}
+    \textbf{BÀI TẬP ĐIỂM CỘNG LẦN 2}
+\end{center}
+\section*{Thuật toán đếm số cặp trội hơn}
+
+Cho danh sách \( \ell \) gồm điểm thi hai môn \( X, Y \) của \( n \) sinh viên (SV), trong đó SV thứ \( i \) với \( 1 \leq i \leq n \) sẽ có một cặp điểm \( (x_i, y_i) \) là các số thực thuộc \([0; 10]\); để đơn giản, ta xét tất cả giá trị đều phân biệt. Yêu cầu đặt ra là cần đếm số cặp \((SV_i, SV_j)\) mà \( SV_j \) có điểm trội hơn so với \( SV_i \), tức là \( x_j > x_i \) và \( y_j > y_i \). Ta muốn xây dựng thuật toán divide-and-conquer để giải quyết bài toán này với ý tưởng sơ lược như sau:
+
+\begin{itemize}
+    \item \textbf{Bước divide}: sắp xếp \( \ell \) theo điểm của môn \( X \) rồi chia thành hai nửa bằng nhau là \( \ell_{\text{left}}, \ell_{\text{right}} \).
+    \item \textbf{Bước conquer}: tiếp theo, ta đếm số cặp trội hơn giữa \( \ell_{\text{left}} \) và \( \ell_{\text{right}} \) bằng cách sắp xếp mỗi danh sách con theo môn \( Y \). Xét hai SV có điểm môn \( Y \) thấp nhất ở cả hai danh sách rồi thực hiện so sánh và đếm, mỗi bước sẽ loại đi được một trong hai SV, cứ tiếp tục như thế cho đến hết.
+\end{itemize}
+
+a) Hãy mô tả cụ thể hơn các ý tưởng ở trên để xây dựng chi tiết thuật toán divide-and-conquer để giải quyết bài này. Từ đó, thiết lập công thức đệ quy để ước lượng số phép so sánh.
+
+\textbf{Mô tả thuật toán chi tiết:}
+
+\begin{enumerate}
+    \item \textbf{Sắp xếp danh sách} \( \ell \) theo điểm của môn \( X \):
+    \begin{itemize}
+        \item Giả sử ta sắp xếp danh sách \( \ell \) theo thứ tự tăng dần của điểm \( X \).
+        \item Chia danh sách \( \ell \) thành hai phần bằng nhau \( \ell_{\text{left}} \) và \( \ell_{\text{right}} \).
+    \end{itemize}
+    \item \textbf{Đếm số cặp trội hơn giữa \( \ell_{\text{left}} \) và \( \ell_{\text{right}} \)}:
+    \begin{itemize}
+        \item Ta cần sắp xếp \( \ell_{\text{left}} \) và \( \ell_{\text{right}} \) theo điểm môn \( Y \).
+        \item Sử dụng merge process để đếm số cặp \((SV_i, SV_j)\) mà \( SV_j \) có điểm trội hơn so với \( SV_i \) (tức là \( x_j > x_i \) và \( y_j > y_i \)).
+        \item Giả sử \( \ell_{\text{left}} \) có \( m \) phần tử và \( \ell_{\text{right}} \) có \( n \) phần tử. Để tìm các cặp trội hơn, ta sẽ duyệt từng phần tử của \( \ell_{\text{left}} \) và \( \ell_{\text{right}} \), kiểm tra điều kiện \( y_j > y_i \) để đếm số cặp trội hơn.
+    \end{itemize}
+    \item \textbf{Kết hợp kết quả}:
+    \begin{itemize}
+        \item Đếm số cặp trội hơn trong \( \ell_{\text{left}} \).
+        \item Đếm số cặp trội hơn trong \( \ell_{\text{right}} \).
+        \item Đếm số cặp trội hơn giữa \( \ell_{\text{left}} \) và \( \ell_{\text{right}} \).
+    \end{itemize}
+\end{enumerate}
+
+\textbf{Công thức đệ quy:}
+
+\begin{itemize}
+    \item Gọi \( T(n) \) là số phép so sánh cần thiết để đếm số cặp trội hơn trong danh sách có \( n \) sinh viên.
+    \item Khi chia danh sách \( n \) phần tử thành hai phần \( n/2 \), ta cần sắp xếp từng phần và đếm số cặp trội hơn giữa hai phần.
+    \item Công thức đệ quy sẽ là:
+    \[
+    T(n) = 2T\left(\frac{n}{2}\right) + O(n)
+    \]
+    \( O(n) \) là độ phức tạp của việc đếm số cặp trội hơn giữa \( \ell_{\text{left}} \) và \( \ell_{\text{right}} \).
+\end{itemize}
+
+b) Bằng cách thích hợp, ước lượng độ phức tạp của thuật toán theo hệ thức tìm được ở a).
+
+Sử dụng công thức đệ quy từ phần a:
+
+\[
+T(n) = 2T\left(\frac{n}{2}\right) + O(n)
+\]
+
+Đây là công thức đệ quy dạng điển hình cho thuật toán "divide-and-conquer", giống với công thức của Merge Sort. Ta có thể giải công thức này bằng phương pháp cây đệ quy hoặc định lý Master.
+
+Sử dụng định lý Master cho \( T(n) = 2T(n/2) + n \):
+
+\begin{itemize}
+    \item \( a = 2 \), \( b = 2 \), \( f(n) = n \).
+    \item Ta có \( n^{\log_b a} = n^{\log_2 2} = n \).
+\end{itemize}
+
+Theo định lý Master, nếu \( f(n) = O(n^{\log_b a}) \), thì \( T(n) = O(n^{\log_b a} \log n) = O(n \log n) \).
+
+Vậy, độ phức tạp của thuật toán là \( O(n \log n) \).
+\end{document}

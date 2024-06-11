@@ -1,0 +1,236 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{vietnam}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{changepage}
+\usepackage{lipsum}
+\usepackage{tikz}
+\usepackage{stackrel}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{tabularx}
+\usepackage{transparent}
+\usepackage{amsmath}
+\usepackage{pgfplots}
+\usepackage{filecontents}
+\usepackage{caption}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{filecontents}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+\lstset{ 
+  language=Python, 
+  basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{blue},
+  stringstyle=\color{red},
+  commentstyle=\color{gray},
+  morecomment=[l][\color{magenta}]{\#},
+  numbers=left, 
+  numberstyle=\tiny\color{gray},
+  stepnumber=1,
+  numbersep=5pt,
+  frame=single,
+  breaklines=true
+}
+\usepackage[margin=1.2cm]{geometry}
+\title{\LARGE{\textbf{Nhập môn phân tích độ phức tạp thuật toán-21TN}}}
+\author{TRẦN MINH HOÀNG-21120075}
+\date{} % Ngày không cần hiển thị
+\begin{document}
+\maketitle
+\title{Phân tích độ phức tạp của đoạn mã}
+\author{}
+\date{}
+\maketitle
+
+\section*{Đề bài}
+
+Cho đoạn mã bên dưới:
+
+\begin{lstlisting}[language=C++]
+int process(int n){
+    int i = n, m = 1, res = 0;
+    while (i > 0){
+        int j = 1;
+        while (j < m){
+            res = i * j;
+            j = j + ?;
+        }
+        m = m + 1;
+        i = i - @;
+    }
+    return res;
+}
+\end{lstlisting}
+
+Hãy thay mỗi ký tự \texttt{?}, \texttt{@} ở dòng code 7, 10 lần lượt bởi các cách sau: $(1,1)$, $(j,j)$, $(1,j)$, $(j,1)$. Với mỗi cách, thực hiện đếm số phép gán và ước lượng độ phức tạp tương ứng.
+
+\section*{Phân tích chi tiết}
+
+\subsection*{Trường hợp 1: (1, 1)}
+\begin{lstlisting}[language=C++]
+int process(int n){
+    int i = n, m = 1, res = 0;
+    while (i > 0){
+        int j = 1;
+        while (j < m){
+            res = i * j;
+            j = j + 1;
+        }
+        m = m + 1;
+        i = i - 1;
+    }
+    return res;
+}
+\end{lstlisting}
+
+\textbf{Phân tích số phép gán và độ phức tạp:}
+\begin{itemize}
+    \item Vòng lặp ngoài (while \texttt{i > 0}) chạy $n$ lần vì $i$ giảm từ $n$ đến $0$ với bước giảm là $1$.
+    \item Vòng lặp trong (while \texttt{j < m}) chạy số lần phụ thuộc vào giá trị của $m$. Cụ thể:
+    \begin{itemize}[label=$\bullet$]
+        
+        \item Đến lần thứ $k$, vòng lặp trong chạy $k-1$ lần.
+    \end{itemize}
+    \item Tổng số lần vòng lặp trong chạy là: 
+    \[
+    \sum_{k=1}^{n-1} k = \frac{(n-1)n}{2}
+    \]
+    \item Số phép gán \texttt{j = j + 1} trong vòng lặp trong: 
+    \[
+    \frac{(n-1)n}{2}
+    \]
+    \item Số phép gán \texttt{m = m + 1} thực hiện $n$ lần.
+    \item Số phép gán \texttt{i = i - 1} thực hiện $n$ lần.
+    \item Tổng số phép gán là:
+    \[
+    \frac{(n-1)n}{2} + 2n = O(n^2)
+    \]
+\end{itemize}
+
+\subsection*{Trường hợp 2: (j, j)}
+\begin{lstlisting}[language=C++]
+int process(int n){
+    int i = n, m = 1, res = 0;
+    while (i > 0){
+        int j = 1;
+        while (j < m){
+            res = i * j;
+            j = j + j;
+        }
+        m = m + 1;
+        i = i - j;
+    }
+    return res;
+}
+\end{lstlisting}
+
+\textbf{Phân tích số phép gán và độ phức tạp:}
+\begin{itemize}
+    \item Vòng lặp ngoài (while \texttt{i > 0}) chạy ít hơn $n$ lần do $i$ giảm nhanh.
+    \item Vòng lặp trong (while \texttt{j < m}) chạy log($m$) lần, vì $j$ tăng gấp đôi mỗi lần.
+    \item Số lần thực hiện phép gán \texttt{j = j + j} trong vòng lặp trong là log($m$).
+    \item Số lần thực hiện phép gán \texttt{m = m + 1} là $n$ lần.
+    \item Số lần thực hiện phép gán \texttt{i = i - j} ít hơn $n$ lần, ước lượng là $O(n)$.
+    \item Độ phức tạp tổng quát là $O(n \log(n))$.
+\end{itemize}
+
+\subsection*{Trường hợp 3: (1, j)}
+\begin{lstlisting}[language=C++]
+int process(int n){
+    int i = n, m = 1, res = 0;
+    while (i > 0){
+        int j = 1;
+        while (j < m){
+            res = i * j;
+            j = j + 1;
+        }
+        m = m + 1;
+        i = i - j;
+    }
+    return res;
+}
+\end{lstlisting}
+
+\textbf{Phân tích số phép gán và độ phức tạp:}
+\begin{itemize}
+    \item Vòng lặp ngoài (while \texttt{i > 0}) chạy ít hơn $n$ lần do $i$ giảm nhanh.
+    \item Vòng lặp trong (while \texttt{j < m}) chạy $m-1$ lần, vì $j$ tăng từ 1 lên $m-1$.
+    \item Tổng số lần vòng lặp trong chạy là:
+    \[
+    \sum_{k=1}^{n-1} k = \frac{(n-1)n}{2}
+    \]
+    \item Số lần thực hiện phép gán \texttt{j = j + 1} trong vòng lặp trong là:
+    \[
+    \frac{(n-1)n}{2}
+    \]
+    \item Số lần thực hiện phép gán \texttt{m = m + 1} là $n$ lần.
+    \item Số lần thực hiện phép gán \texttt{i = i - j} ít hơn $n$ lần, ước lượng là $O(n)$.
+    \item Độ phức tạp tổng quát là $O(n \log(n))$.
+\end{itemize}
+
+\subsection*{Trường hợp 4: (j, 1)}
+\begin{lstlisting}[language=C++]
+int process(int n){
+    int i = n, m = 1, res = 0;
+    while (i > 0){
+        int j = 1;
+        while (j < m){
+            res = i * j;
+            j = j + j;
+        }
+        m = m + 1;
+        i = i - 1;
+    }
+    return res;
+}
+\end{lstlisting}
+
+\textbf{Phân tích số phép gán và độ phức tạp:}
+\begin{itemize}
+    \item Vòng lặp ngoài (while \texttt{i > 0}) chạy $n$ lần vì $i$ giảm từ $n$ đến $0$ với bước giảm là $1$.
+    \item Vòng lặp trong (while \texttt{j < m}) chạy log($m$) lần do $j$ tăng gấp đôi mỗi lần.
+    \item Số lần thực hiện phép gán \texttt{j = j + j} trong vòng lặp trong là log($m$).
+    \item Số lần thực hiện phép gán \texttt{m = m + 1} là $n$ lần.
+    \item Số lần thực hiện phép gán \texttt{i = i - 1} là $n$ lần.
+    \item Độ phức tạp tổng quát là $O(n \log(n))$.
+\end{itemize}
+
+\section*{Tóm tắt}
+\begin{itemize}
+    \item Trường hợp $(1,1)$: $O(n^2)$
+    \item Trường hợp $(j,j)$: $O(n \log(n))$
+    \item Trường hợp $(1,j)$: $O(n \log(n))$
+    \item Trường hợp $(j,1)$: $O(n \log(n))$
+\end{itemize}
+
+Như vậy, các trường hợp $(j,j)$, $(1,j)$, và $(j,1)$ đều có độ phức tạp thấp hơn $O(n \log(n))$ so với $O(n^2)$ của trường hợp $(1,1)$.
+
+\end{document}
