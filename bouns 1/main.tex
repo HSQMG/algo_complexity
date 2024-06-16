@@ -65,7 +65,9 @@
 \date{} % Ngày không cần hiển thị
 \begin{document}
 \maketitle
-\title{Phân tích độ phức tạp của đoạn mã}
+\begin{center}
+    \textbf{BÀI TẬP ĐIỂM CỘNG LẦN 2}
+\end{center}
 \author{}
 \date{}
 \maketitle
@@ -110,31 +112,25 @@ int process(int n){
     return res;
 }
 \end{lstlisting}
-
+Gọi $T(n) $ là số phép gán:
+\[
+    T(n)=3+\sum_{i = 1}^{n}(3+\sum_{j=1}^{j<m}2)
+\]
 \textbf{Phân tích số phép gán và độ phức tạp:}
-\begin{itemize}
-    \item Vòng lặp ngoài (while \texttt{i > 0}) chạy $n$ lần vì $i$ giảm từ $n$ đến $0$ với bước giảm là $1$.
-    \item Vòng lặp trong (while \texttt{j < m}) chạy số lần phụ thuộc vào giá trị của $m$. Cụ thể:
-    \begin{itemize}[label=$\bullet$]
-        
-        \item Đến lần thứ $k$, vòng lặp trong chạy $k-1$ lần.
-    \end{itemize}
-    \item Tổng số lần vòng lặp trong chạy là: 
-    \[
-    \sum_{k=1}^{n-1} k = \frac{(n-1)n}{2}
-    \]
-    \item Số phép gán \texttt{j = j + 1} trong vòng lặp trong: 
-    \[
-    \frac{(n-1)n}{2}
-    \]
-    \item Số phép gán \texttt{m = m + 1} thực hiện $n$ lần.
-    \item Số phép gán \texttt{i = i - 1} thực hiện $n$ lần.
-    \item Tổng số phép gán là:
-    \[
-    \frac{(n-1)n}{2} + 2n = O(n^2)
-    \]
-\end{itemize}
 
+\begin{align*}
+    T(n)&=3+\sum_{i = 1}^{n}(3+\sum_{j=1}^{j<m}2)\\
+    &=3+\sum_{i = 1}^{n}(3+2m)\\
+\end{align*}
+\begin{itemize}
+    \item Qua mỗi vòng lặp i giảm 1 đơn vị, m tăng 1 đơn vị $\Rightarrow m=n+1-i$
+\end{itemize}
+\begin{align*}
+    T(n)&=3+\sum_{i = 1}^{n}(3+2n-2i)\\
+    &=3+5n+2n^2-2\sum_{i=1}^{n}i\\
+    &=3+5n+2n^2-n(n+1)\\
+    &=n^2+4n+3 \in \theta(n^2)
+\end{align*}
 \subsection*{Trường hợp 2: (j, j)}
 \begin{lstlisting}[language=C++]
 int process(int n){
@@ -154,14 +150,20 @@ int process(int n){
 
 \textbf{Phân tích số phép gán và độ phức tạp:}
 \begin{itemize}
-    \item Vòng lặp ngoài (while \texttt{i > 0}) chạy ít hơn $n$ lần do $i$ giảm nhanh.
-    \item Vòng lặp trong (while \texttt{j < m}) chạy log($m$) lần, vì $j$ tăng gấp đôi mỗi lần.
-    \item Số lần thực hiện phép gán \texttt{j = j + j} trong vòng lặp trong là log($m$).
-    \item Số lần thực hiện phép gán \texttt{m = m + 1} là $n$ lần.
-    \item Số lần thực hiện phép gán \texttt{i = i - j} ít hơn $n$ lần, ước lượng là $O(n)$.
-    \item Độ phức tạp tổng quát là $O(n \log(n))$.
+    \item j được tăng lớn hơn hoặc bằng m
+    \item i giảm một khoảng là m hay nói cách khác i=i-m
 \end{itemize}
-
+\begin{align*}
+    T(n)&=3+\sum_{i = 1}^{n}(3+\sum_{j=1,j*=2}^{j<m}2)\\
+    &=3+\sum_{i=n,i-=m}{i>0}(3+2\log_{2}(m))
+\end{align*}
+\begin{itemize}
+    \item Gọi $a= m_{max}$ thỏa $a(a+1)=2n \Rightarrow a \thickapprox \sqrt{2n}$
+\end{itemize}
+\begin{align*}
+    T(n)&=3+3a+2(\log_{2}(1)+\log_{2}(2)+\cdots+\log_{2}(a))\\
+    &\in theta(a\log a)=\theta(\sqrt{2n}\log\sqrt{2n})=\theta(\sqrt{n}\log n)\\
+\end{align*}
 \subsection*{Trường hợp 3: (1, j)}
 \begin{lstlisting}[language=C++]
 int process(int n){
@@ -179,22 +181,12 @@ int process(int n){
 }
 \end{lstlisting}
 
-\textbf{Phân tích số phép gán và độ phức tạp:}
-\begin{itemize}
-    \item Vòng lặp ngoài (while \texttt{i > 0}) chạy ít hơn $n$ lần do $i$ giảm nhanh.
-    \item Vòng lặp trong (while \texttt{j < m}) chạy $m-1$ lần, vì $j$ tăng từ 1 lên $m-1$.
-    \item Tổng số lần vòng lặp trong chạy là:
-    \[
-    \sum_{k=1}^{n-1} k = \frac{(n-1)n}{2}
-    \]
-    \item Số lần thực hiện phép gán \texttt{j = j + 1} trong vòng lặp trong là:
-    \[
-    \frac{(n-1)n}{2}
-    \]
-    \item Số lần thực hiện phép gán \texttt{m = m + 1} là $n$ lần.
-    \item Số lần thực hiện phép gán \texttt{i = i - j} ít hơn $n$ lần, ước lượng là $O(n)$.
-    \item Độ phức tạp tổng quát là $O(n \log(n))$.
-\end{itemize}
+\begin{align*}
+    T(n)&=3+\sum_{i=n,i-=m}{i>0}(3+2\log_{2}(m))\\
+    &=3+\sum_{i=n,i-=m}{i>0}(3+2m)\\
+    &=3+3a+a(a+1)\\
+    &=3+3\sqrt{2n}+2n \in \theta(n).
+\end{align*}
 
 \subsection*{Trường hợp 4: (j, 1)}
 \begin{lstlisting}[language=C++]
@@ -212,25 +204,17 @@ int process(int n){
     return res;
 }
 \end{lstlisting}
-
-\textbf{Phân tích số phép gán và độ phức tạp:}
-\begin{itemize}
-    \item Vòng lặp ngoài (while \texttt{i > 0}) chạy $n$ lần vì $i$ giảm từ $n$ đến $0$ với bước giảm là $1$.
-    \item Vòng lặp trong (while \texttt{j < m}) chạy log($m$) lần do $j$ tăng gấp đôi mỗi lần.
-    \item Số lần thực hiện phép gán \texttt{j = j + j} trong vòng lặp trong là log($m$).
-    \item Số lần thực hiện phép gán \texttt{m = m + 1} là $n$ lần.
-    \item Số lần thực hiện phép gán \texttt{i = i - 1} là $n$ lần.
-    \item Độ phức tạp tổng quát là $O(n \log(n))$.
-\end{itemize}
-
+\begin{align*}
+    T(n)&=3+\sum_{i=1}{n}(3+\sum_{j=1,j*=2}{m}2)\\
+    &=3+\sum_{i=1}{n}(3+2\log_{2}m)\\
+    &=3+3n+2(\log_{2}(1)+\log_{2}(2)+\cdots+\log_{2}(n))\\
+    &\in \theta(n\log n)
+\end{align*}
 \section*{Tóm tắt}
 \begin{itemize}
     \item Trường hợp $(1,1)$: $O(n^2)$
-    \item Trường hợp $(j,j)$: $O(n \log(n))$
-    \item Trường hợp $(1,j)$: $O(n \log(n))$
-    \item Trường hợp $(j,1)$: $O(n \log(n))$
+    \item Trường hợp $(j,j)$: $O(\sqrt{n} \log n)$
+    \item Trường hợp $(1,j)$: $O(n)$
+    \item Trường hợp $(j,1)$: $O(n \log n)$
 \end{itemize}
-
-Như vậy, các trường hợp $(j,j)$, $(1,j)$, và $(j,1)$ đều có độ phức tạp thấp hơn $O(n \log(n))$ so với $O(n^2)$ của trường hợp $(1,1)$.
-
 \end{document}

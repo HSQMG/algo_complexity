@@ -108,9 +108,9 @@ a) Hãy mô tả cụ thể hơn các ý tưởng ở trên để xây dựng ch
     \item Khi chia danh sách \( n \) phần tử thành hai phần \( n/2 \), ta cần sắp xếp từng phần và đếm số cặp trội hơn giữa hai phần.
     \item Công thức đệ quy sẽ là:
     \[
-    T(n) = 2T\left(\frac{n}{2}\right) + O(n)
+    T(n) = 2T\left(\frac{n}{2}\right) + O(n\log n)
     \]
-    \( O(n) \) là độ phức tạp của việc đếm số cặp trội hơn giữa \( \ell_{\text{left}} \) và \( \ell_{\text{right}} \).
+    \( O(n \log n) \) là chi phí sắp xếp hai nửa danh sách theo môn Y, và chi phí lặp qua hai danh sách để so sánh (trong trường hợp xấu nhất, mỗi sinh viên trong một danh sách được so sánh với tất cả sinh viên trong danh sách kia).
 \end{itemize}
 
 b) Bằng cách thích hợp, ước lượng độ phức tạp của thuật toán theo hệ thức tìm được ở a).
@@ -118,19 +118,20 @@ b) Bằng cách thích hợp, ước lượng độ phức tạp của thuật t
 Sử dụng công thức đệ quy từ phần a:
 
 \[
-T(n) = 2T\left(\frac{n}{2}\right) + O(n)
+T(n) = 2T\left(\frac{n}{2}\right) + O(n\log n)
 \]
 
 Đây là công thức đệ quy dạng điển hình cho thuật toán "divide-and-conquer", giống với công thức của Merge Sort. Ta có thể giải công thức này bằng phương pháp cây đệ quy hoặc định lý Master.
 
-Sử dụng định lý Master cho \( T(n) = 2T(n/2) + n \):
+Sử dụng định lý Master cho \( T(n) = 2T\left(\frac{n}{2}\right) + O(n\log n) \):
 
 \begin{itemize}
-    \item \( a = 2 \), \( b = 2 \), \( f(n) = n \).
+    \item \( a = 2 \), \( b = 2 \), \( f(n) = O(n\log n) \).
     \item Ta có \( n^{\log_b a} = n^{\log_2 2} = n \).
 \end{itemize}
 
-Theo định lý Master, nếu \( f(n) = O(n^{\log_b a}) \), thì \( T(n) = O(n^{\log_b a} \log n) = O(n \log n) \).
+Theo định lý Master, nếu \( f(n) = O(n^{\log_b a}\log^k n) \) với k=1, thì \( T(n) = O(n^{\log_b a} \log^{k+1} n) = O(n \log^2 n) \).
 
-Vậy, độ phức tạp của thuật toán là \( O(n \log n) \).
+Vậy, độ phức tạp của thuật toán là \( O(n \log^2 n) \).
+
 \end{document}
